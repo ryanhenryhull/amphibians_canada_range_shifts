@@ -1,7 +1,7 @@
 # ----------------------------------
 # Authors: Ryan Hull
 # Date: October 2025
-# Purpose: Divide and conquer
+# Purpose: process understand and break down north american amphibian observations
 # F25 McGill - BIOL 432 Data Project
 # ----------------------------------
 
@@ -10,17 +10,27 @@
 library("readr")
 library("dplyr")
 
-
-# 2. Data - Amphibian observations with location in Can/Usa/mexico from 2000-2025
-# Citation for the download:
+# 2. Initial data processing
+# Amphibian observations with location in Can/Usa/mexico from 2000-2025
+# Citation for the download, with link giving info
 # GBIF.org (02 October 2025) GBIF Occurrence Download https://doi.org/10.15468/dl.tzn8at
+rm(list=ls())
 gbif_amphibians <- read_tsv("data/gbif_data_amphibians_2000_2025.csv")
 
-# keep rows and cols of interest
-gbif_amphibians <- gbif_amphibians[which(gbif_amphibians$taxonRank=="SPECIES"),]
+# Keep only species level observations
+gbif_amphibians <- gbif_amphibians[which(gbif_amphibians$taxonRank=="SPECIES"), ]
+
+# Keep only observations whose coordinate uncertainty doesn't exceed our gridsize
+gbif_amphibians <- gbif_amphibians[which(gbif_amphibians$coordinateUncertaintyInMeters < 1000), ]
+
+# Remove unhelpful columns
 gbif_amphibians <- gbif_amphibians[,c("gbifID","species","countryCode","stateProvince",
                                       "decimalLatitude","decimalLongitude","day","month",
                                       "year")]
+
+# Exclude cold season observations? Maybe needed if we use climate parameters specific to warm season
+#?  months_to_keep <- c(5,6,7,8,9)
+#?  gbif_amphibians <- gbif_amphibians[gbif_amphibians$month %in% months_to_keep,]
 
 
 

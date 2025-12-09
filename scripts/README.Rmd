@@ -1,0 +1,15 @@
+---
+title: "README"
+output: html_document
+---
+
+## proper_neartic_amphibian_gbif_processing.R
+this was the final version used to filter down records.
+
+## first GBIF download: 
+Observations from nearctic countries
+GBIF.org (02 October 2025) GBIF Occurrence Download https://doi.org/10.15468/dl.tzn8at
+
+## second GBIF download
+(non-nearctic countries where nearctic species could have observations we want to include)
+GBIF.org (8 November 2025) GBIF Occurrence Download https://doi.org/10.15468/dl.96xayz
